@@ -10,8 +10,8 @@ Quotes app using flutter.
 
 | Name                     | IT number     |
 | ------------------------ | ------------- |
+| Wangchen T.              | IT19098838    | 
 | Pasqual N.T.             | IT19408316    |  
-| Wangchen T.              | IT19098838    |
 | Walimuni Dewage T. S. S. | IT19161334    |
 
 ### Technologies
