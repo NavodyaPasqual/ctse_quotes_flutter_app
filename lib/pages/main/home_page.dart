@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ctse_quotes_flutter_app/models/main/user_model.dart';
+import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_list_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final userQuotesButton = Material(
+      elevation: 5,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UserQuotesList())
+          );
+        },
+        child: const Text(
+          "UserQuotesList",
+        ),
+      ),
+    );
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -55,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ActionChip(label: const Text("Logout"), onPressed: (){
               logout(context);
             }),
+            const SizedBox(height: 30),
+            userQuotesButton
           ],
         ),
       ),
