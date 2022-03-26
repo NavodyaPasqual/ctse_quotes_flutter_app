@@ -50,36 +50,34 @@ class _UserQuotesEditState extends State<UserQuotesEdit> {
             ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(border: Border.all()),
+            child: TextField(
+              controller: author,
+              decoration: const InputDecoration(
+                hintText: 'author',
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Container(
               decoration: BoxDecoration(border: Border.all()),
               child: TextField(
-                controller: author,
+                controller: quote,
+                expands: true,
+                maxLines: null,
                 decoration: const InputDecoration(
-                  hintText: 'author',
+                  hintText: 'quote'
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(border: Border.all()),
-                child: TextField(
-                  controller: quote,
-                  expands: true,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    hintText: 'quote'
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

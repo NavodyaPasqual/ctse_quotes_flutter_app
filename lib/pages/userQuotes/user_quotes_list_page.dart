@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_add_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_edit_page.dart';
+import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_read_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _UserQuotesListState extends State<UserQuotesList> {
               itemBuilder: (_, index){
                 return GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserQuotesEdit(docid: snapshot.data!.docs[index])));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserQuotesRead(docid: snapshot.data!.docs[index])));
                   },
                   child: Column(
                     children: [
@@ -81,6 +82,12 @@ class _UserQuotesListState extends State<UserQuotesList> {
                           contentPadding: const EdgeInsets.symmetric(
                             vertical: 12,
                             horizontal: 16,
+                          ),
+                          trailing: MaterialButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => UserQuotesEdit(docid: snapshot.data!.docs[index])));
+                              },
+                            child: const Text('edit'),
                           ),
                         ),
                       ),
