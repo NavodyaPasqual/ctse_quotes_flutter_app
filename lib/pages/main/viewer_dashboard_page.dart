@@ -14,6 +14,7 @@ class _ViewerDashboardPageState extends State<ViewerDashboardPage> {
     return Scaffold(
         body: Column(
           children: <Widget>[
+            const SizedBox(height: 55),
             FlatButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => const UserQuotesList()));},
               color: Colors.redAccent,
               child: const Text("User Quotes"),

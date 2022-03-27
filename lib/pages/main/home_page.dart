@@ -4,6 +4,7 @@ import 'package:ctse_quotes_flutter_app/pages/main/admin_dashboard_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/viewer_dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'login_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,9 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF133B5C),
       body: Column(
         children: <Widget>[
-          Image.asset("assets/download.png"),
+          const SizedBox(height: 45),
+          SizedBox(
+            height: 350,
+            child: SvgPicture.asset(
+                'assets/home.svg'
+            ),
+          ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Row(
@@ -47,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: const Color(0xFFFCDAB7),
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
@@ -56,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Colors.redAccent.withOpacity(0.2),
+                    color: const Color(0xFFFCDAB7).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
@@ -65,19 +73,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Colors.redAccent.withOpacity(0.2),
+                    color: const Color(0xFFFCDAB7).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20,),
-          Text("Hi ${userModel.firstName} ${userModel.secondName}",
+          const SizedBox(height: 15),
+          Text("Welcome ${userModel.firstName} ${userModel.secondName}",
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.redAccent,
-              fontSize: 32,
+              color: Color(0xFFFCDAB7),
+              fontSize: 25,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -86,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(36),
                 side: const BorderSide(
-                  color: Colors.redAccent,
+                  color: Color(0xFFFCDAB7),
                 )
             ),
             onPressed: (){logout(context);},
@@ -95,11 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.center,
               width: 60,
               child: const Text("Logout",
-                style: TextStyle(color: Colors.redAccent),
+                style: TextStyle(color: Color(0xFFFCDAB7)),
               ),
             ),
           ),
-          const SizedBox(height: 60,),
+          const SizedBox(height: 40,),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
             child: Row(
@@ -115,13 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialPageRoute(builder: (context) => const ViewerDashboardPage())
                       );
                     },
-                    color: Colors.redAccent,
+                    color: const Color(0xFFFCDAB7),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
                       width: double.infinity,
                       child: const Text("Viewer",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Color(0xFF133B5C)),
                       ),
                     ),
                   ),
@@ -132,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(36),
                       side: const BorderSide(
-                        color: Colors.redAccent,
+                        color: Color(0xFFFCDAB7),
                       )
                     ),
                     onPressed: (){
@@ -146,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.center,
                       width: double.infinity,
                       child: const Text("Admin",
-                        style: TextStyle(color: Colors.redAccent),
+                        style: TextStyle(color: Color(0xFFFCDAB7)),
                       ),
                     ),
                   ),
