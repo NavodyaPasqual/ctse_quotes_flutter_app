@@ -1,5 +1,7 @@
+import 'package:ctse_quotes_flutter_app/pages/main/admin_dashboard_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/home_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/registration_page.dart';
+import 'package:ctse_quotes_flutter_app/pages/main/viewer_dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -183,15 +185,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void signIn(String email, String password) async{
-    if(_formKey.currentState!.validate()){
-      await _auth.signInWithEmailAndPassword(email: email, password: password)
-        .then((uid) => {
+    if(email == 'admin@gmail.com'){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminDashboardPage()));
+    }
+    else{
+      if(_formKey.currentState!.validate()){
+        await _auth.signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
           Fluttertoast.showToast(msg: "Login Successful"),
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen())),
-      }).catchError((e){
-        Fluttertoast.showToast(msg: e!.message);
-      });
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ViewerDashboardPage())),
+        }).catchError((e){
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      }
     }
   }
 }
-
