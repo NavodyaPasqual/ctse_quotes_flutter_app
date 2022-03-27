@@ -4,6 +4,7 @@ import 'package:ctse_quotes_flutter_app/pages/main/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -31,6 +32,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       autofocus: false,
       controller: firstNameController,
       keyboardType: TextInputType.name,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       validator: (value) {
         // reg expression
         RegExp regExp = RegExp(r'^.{3,}$');
@@ -47,11 +51,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.account_circle),
+        prefixIcon: const Icon(Icons.account_circle , color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "First name",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -61,6 +69,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       autofocus: false,
       controller: secondNameController,
       keyboardType: TextInputType.name,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       validator: (value) {
         // reg expression
         if(value!.isEmpty){
@@ -74,11 +85,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.account_circle),
+        prefixIcon: const Icon(Icons.account_circle , color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Second name",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -88,6 +103,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       validator: (value) {
         if(value!.isEmpty){
           return ("Please enter your email");
@@ -104,11 +122,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.mail),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -117,6 +139,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       obscureText: true,
       validator: (value) {
         // reg expression for password
@@ -134,11 +159,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key),
+        prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -147,6 +176,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final confirmPasswordField = TextFormField(
       autofocus: false,
       controller: confirmPasswordController,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       obscureText: true,
       validator: (value) {
         if(confirmPasswordController.text != passwordController.text){
@@ -160,11 +192,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key),
+        prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm password",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -173,7 +209,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: const Color(0xC9FCDAB7),
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -185,19 +221,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20,
-              color: Colors.white, fontWeight: FontWeight.bold
+              color: Color(0xFF133B5C), fontWeight: FontWeight.bold
           ),
         ),
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF133B5C),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.red),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFFFCDAB7)),
           onPressed: (){
             Navigator.of(context).pop();
           },
@@ -206,9 +242,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
+            color: const Color(0xFF133B5C),
             child: Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.only(left: 34.0, right: 34.0,top: 0.0,bottom: 10.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -216,13 +252,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 180,
-                      child: Image.asset(
-                        "assets/download.png",
-                        fit: BoxFit.contain,
+                      height: 150,
+                      child: SvgPicture.asset(
+                          'assets/registration.svg'
                       ),
                     ),
-                    const SizedBox(height: 45),
+                    const SizedBox(height: 25),
                     firstNameField,
                     const SizedBox(height: 20),
                     secondNameField,

@@ -2,6 +2,7 @@ import 'package:ctse_quotes_flutter_app/pages/main/home_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/registration_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,6 +30,9 @@ class _LoginPageState extends State<LoginPage> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
        validator: (value) {
         if(value!.isEmpty){
           return ("Please enter your email");
@@ -43,13 +47,18 @@ class _LoginPageState extends State<LoginPage> {
       {
         emailController.text = value!;
       },
+
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.mail),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -59,6 +68,9 @@ class _LoginPageState extends State<LoginPage> {
       autofocus: false,
       controller: passwordController,
       obscureText: true, // To hide text
+      style: const TextStyle(
+        color: Color(0xFFFCDAB7),
+      ),
       validator: (value) {
         // reg expression for password
         RegExp regExp = RegExp(r'^.{6,}$');
@@ -75,11 +87,15 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key),
+        prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
-        border: OutlineInputBorder(
+        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
         ),
       ),
     );
@@ -88,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: const Color(0xC9FCDAB7),
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -100,18 +116,18 @@ class _LoginPageState extends State<LoginPage> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20,
-              color: Colors.white, fontWeight: FontWeight.bold
+              color: Color(0xFF133B5C), fontWeight: FontWeight.bold
           ),
         ),
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF133B5C),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
+            color: const Color(0xFF133B5C),
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
@@ -121,10 +137,9 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 200,
-                      child: Image.asset(
-                          "assets/download.png",
-                          fit: BoxFit.contain,
+                      height: 250,
+                      child: SvgPicture.asset(
+                          'assets/login.svg'
                       ),
                     ),
                     const SizedBox(height: 45),
@@ -149,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Text(
                             "Signup",
                             style: TextStyle(
-                              color: Colors.redAccent,
+                              color: Color(0x81FCDAB7),
                               fontWeight: FontWeight.w600,
                               fontSize:15,
                             ),
