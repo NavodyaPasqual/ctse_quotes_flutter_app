@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ctse_quotes_flutter_app/models/main/user_model.dart';
-import 'package:ctse_quotes_flutter_app/pages/main/home_page.dart';
+import 'package:ctse_quotes_flutter_app/pages/main/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -50,10 +50,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.account_circle , color: Color(0xFFFCDAB7)),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "First name",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "First name",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -84,10 +90,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.account_circle , color: Color(0xFFFCDAB7)),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Second name",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Second name",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -123,8 +135,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Email",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -158,10 +176,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Password",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Password",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -191,10 +215,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
+        prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Confirm password",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Confirm password",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -309,7 +339,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully");
 
-    Navigator.pushAndRemoveUntil((context), MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil((context), MaterialPageRoute(builder: (context) => const LoginPage()), (route) => false);
   }
 }
 
