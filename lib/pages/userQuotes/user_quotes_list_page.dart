@@ -78,25 +78,6 @@ class _UserQuotesListState extends State<UserQuotesList> {
           }
           return Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xF5FADCBD),
-                  borderRadius: BorderRadius.circular(30)
-                ),
-                child: TextField(
-                  onChanged: (value) {
-                  },
-                  controller: _textEditingController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: Color(0xFF090909)),
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.all(15),
-                    hintText: 'Search by author'
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(6),
@@ -109,7 +90,7 @@ class _UserQuotesListState extends State<UserQuotesList> {
                         child: GestureDetector(
                           onTap: () =>
                             Navigator.push(context,PageRouteBuilder(
-                                transitionDuration:const Duration(milliseconds: 550),
+                                transitionDuration:const Duration(milliseconds: 600),
                                 reverseTransitionDuration: const Duration(milliseconds: 420),
                                 transitionsBuilder:(BuildContext context, Animation<double> animation,
                                     Animation<double> secondaryAnimation, Widget child){
