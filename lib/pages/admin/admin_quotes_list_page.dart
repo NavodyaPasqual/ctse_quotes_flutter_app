@@ -57,8 +57,8 @@ class _AdminQuotesListState extends State<AdminQuotesList> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 3,
-                          right: 3,
+                          left: 10,
+                          right: 10,
                         ),
                         child: ListTile(
                           shape: RoundedRectangleBorder(
@@ -70,7 +70,7 @@ class _AdminQuotesListState extends State<AdminQuotesList> {
                           title: Text(
                             snapshot.data!.docChanges[index].doc['author'],
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 21,
                             ),
                           ),
                           subtitle: Text(
