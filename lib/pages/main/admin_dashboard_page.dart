@@ -19,12 +19,6 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                 color: Colors.redAccent,
                 child: const Text("Admin Quotes"),
               ),
-
-              const SizedBox(height: 55),
-              FlatButton(onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminQuotesList()));},
-                color: Colors.redAccent,
-                child: const Text("User List"),
-              ),
             ]
         )
     );
