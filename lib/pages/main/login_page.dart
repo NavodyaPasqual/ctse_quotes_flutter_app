@@ -1,5 +1,4 @@
 import 'package:ctse_quotes_flutter_app/pages/main/admin_dashboard_page.dart';
-import 'package:ctse_quotes_flutter_app/pages/main/home_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/registration_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/viewer_dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // firebase
   final _auth = FirebaseAuth.instance;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     //email field
@@ -43,19 +42,23 @@ class _LoginPageState extends State<LoginPage> {
          if(!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
            return ("Please enter a valid email");
          }
-         return null;
        },
       onSaved: (value)
       {
         emailController.text = value!;
       },
-
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.mail, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Email",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xFFFCDAB7),
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -82,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
         if(!regExp.hasMatch(value)){
           return ("Enter valid password(Min 6 characters");
         }
+        return null;
       },
       onSaved: (value)
       {
@@ -91,15 +95,21 @@ class _LoginPageState extends State<LoginPage> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.vpn_key, color: Color(0xFFFCDAB7)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Password",
-        hintStyle: const TextStyle(color: Color(0x81FCDAB7)),
+        labelText: "Password",
+        labelStyle: const TextStyle(color: Color(0x81FCDAB7)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xFFFCDAB7),
           ),
         ),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Color(0xFFFCDAB7),
+        ),
       ),
+    )
     );
 
     // Login Button
@@ -110,17 +120,27 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          signIn(emailController.text, passwordController.text);
-        },
-        child: const Text(
-          "Login",
+
+        child: isLoading? Row (
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            CircularProgressIndicator(color: Colors.white),
+            SizedBox(width:24),
+              Text('Please Wait'),
+          ],
+        ): const Text('Login',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20,
               color: Color(0xFF133B5C), fontWeight: FontWeight.bold
-          ),
-        ),
+          ),),
+        onPressed: () async{
+          if(isLoading) return;
+          setState(() => isLoading = true );
+          await Future.delayed(const Duration(seconds: 2));
+          setState(() => isLoading = false);
+          signIn(emailController.text, passwordController.text);
+        },
       ),
     );
 
