@@ -17,7 +17,9 @@ class _AdminQuotesListState extends State<AdminQuotesList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFCDAB7),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF133B5C),
         onPressed: () {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => AdminQuotesAdd()));
         },
