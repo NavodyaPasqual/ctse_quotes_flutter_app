@@ -5,7 +5,6 @@ import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_read_page.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:random_color/random_color.dart';
 
 class UserQuotesList extends StatefulWidget {
   const UserQuotesList({Key? key}) : super(key: key);
@@ -19,7 +18,6 @@ class _UserQuotesListState extends State<UserQuotesList> {
       .collection('userQuotes').snapshots();
 
   final TextEditingController _textEditingController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +38,13 @@ class _UserQuotesListState extends State<UserQuotesList> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFFCDAB7),
         onPressed: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => UserQuotesAdd()));
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, _){
+              return UserQuotesAdd();
+            },
+              opaque: false));
         },
+
         child: const Icon(
           Icons.add,
           color: Color(0xFF1D2D50),
@@ -59,9 +61,8 @@ class _UserQuotesListState extends State<UserQuotesList> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFFFCDAB7)),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () =>
+            Navigator.of(context).pop(),
         ),
       ),
       body: StreamBuilder(
@@ -87,10 +88,23 @@ class _UserQuotesListState extends State<UserQuotesList> {
                     return Container(
                         margin: const EdgeInsets.only(left: 4.0,top: 6.0,right: 4.0,bottom: 6.0),
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                UserQuotesRead(docid: snapshot.data!.docs[index])));
-                          },
+                          onTap: () =>
+                            Navigator.push(context,PageRouteBuilder(
+                                transitionDuration:const Duration(milliseconds: 600),
+                                reverseTransitionDuration: const Duration(milliseconds: 420),
+                                transitionsBuilder:(BuildContext context, Animation<double> animation,
+                                    Animation<double> secondaryAnimation, Widget child){
+                                  return ScaleTransition(
+                                    scale: animation,
+                                    child: child,
+                                  );
+                                },
+
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                return UserQuotesRead(docid: snapshot.data!.docs[index]);
+                                }
+                              )
+                            ),
                           child: Column(
                             children: [
                               Card(
@@ -114,7 +128,6 @@ class _UserQuotesListState extends State<UserQuotesList> {
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
-
                                       ),
                                     ),
                                     subtitle: Text(
@@ -132,16 +145,17 @@ class _UserQuotesListState extends State<UserQuotesList> {
                                         Navigator.push(context, MaterialPageRoute(
                                             builder: (_) =>
                                                 UserQuotesEdit(docid: snapshot.data!
-                                                    .docs[index])));
+                                                    .docs[index]
+                                                )
+                                        )
+                                        );
                                       },
-
                                       icon: const Icon(
                                         Icons.edit_note_rounded,
                                         size: 25,
                                         color: Color(0xFFFCDAB7),
                                       ),
                                     ),
-
                                   ),
                                 ),
                               ),
@@ -169,6 +183,4 @@ class _UserQuotesListState extends State<UserQuotesList> {
     };
     return MaterialStateProperty.resolveWith(getColor);
   }
-
-
 }
