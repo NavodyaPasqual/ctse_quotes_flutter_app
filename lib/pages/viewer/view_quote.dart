@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UserQuotesList extends StatefulWidget {
-  const UserQuotesList({Key? key}) : super(key: key);
+class ViewQuotes extends StatefulWidget {
+  const ViewQuotes({Key? key}) : super(key: key);
 
   @override
-  _UserQuotesListState createState() => _UserQuotesListState();
+  _ViewQuotesState createState() => _ViewQuotesState();
 }
 
-class _UserQuotesListState extends State<UserQuotesList> {
+class _ViewQuotesState extends State<ViewQuotes> {
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('userQuotes').snapshots();
 
