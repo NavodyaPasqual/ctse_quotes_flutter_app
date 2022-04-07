@@ -11,7 +11,10 @@ class AdminQuotesAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: const Color(0xFFFCDAB7),
+      appBar: AppBar( title: const Text('Add Quotes',
+          style:
+          TextStyle(fontSize: 18.0, color: Color(0xFFFCDAB7))),backgroundColor: const  Color(0xFF133B5C),
         actions: [
           MaterialButton(onPressed: () {
             ref.add({
@@ -22,7 +25,8 @@ class AdminQuotesAdd extends StatelessWidget {
             });
           },
             child: const Text(
-                "save"
+                "save",style:
+            TextStyle(fontSize: 17 ,fontWeight: FontWeight.bold, color: Color(0xFFFCDAB7))
             ),
           ),
         ],
