@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_add_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_edit_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UserQuotesList extends StatefulWidget {
-  const UserQuotesList({Key? key}) : super(key: key);
+class ViewQuotes extends StatefulWidget {
+  const ViewQuotes({Key? key}) : super(key: key);
 
   @override
-  _UserQuotesListState createState() => _UserQuotesListState();
+  _ViewQuotesState createState() => _ViewQuotesState();
 }
 
-class _UserQuotesListState extends State<UserQuotesList> {
+class _ViewQuotesState extends State<ViewQuotes> {
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('userQuotes').snapshots();
 
@@ -35,23 +34,9 @@ class _UserQuotesListState extends State<UserQuotesList> {
     return Scaffold(
 
       backgroundColor: const Color(0xFF000000),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFFCDAB7),
-        onPressed: () {
-          Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (context, animation, _){
-              return UserQuotesAdd();
-            },
-              opaque: false));
-        },
 
-        child: const Icon(
-          Icons.add,
-          color: Color(0xFF1D2D50),
-        ),
-      ),
       appBar: AppBar(
-        title: const Text("My Quotes"),
+        title: const Text("Quotes"),
         titleTextStyle: const TextStyle(
           color: Color(0xFFFCDAB7),
           fontWeight: FontWeight.bold,
@@ -62,7 +47,7 @@ class _UserQuotesListState extends State<UserQuotesList> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFFFCDAB7)),
           onPressed: () =>
-            Navigator.of(context).pop(),
+              Navigator.of(context).pop(),
         ),
       ),
       body: StreamBuilder(
@@ -89,22 +74,22 @@ class _UserQuotesListState extends State<UserQuotesList> {
                         margin: const EdgeInsets.only(left: 4.0,top: 6.0,right: 4.0,bottom: 6.0),
                         child: GestureDetector(
                           onTap: () =>
-                            Navigator.push(context,PageRouteBuilder(
-                                transitionDuration:const Duration(milliseconds: 600),
-                                reverseTransitionDuration: const Duration(milliseconds: 420),
-                                transitionsBuilder:(BuildContext context, Animation<double> animation,
-                                    Animation<double> secondaryAnimation, Widget child){
-                                  return ScaleTransition(
-                                    scale: animation,
-                                    child: child,
-                                  );
-                                },
+                              Navigator.push(context,PageRouteBuilder(
+                                  transitionDuration:const Duration(milliseconds: 600),
+                                  reverseTransitionDuration: const Duration(milliseconds: 420),
+                                  transitionsBuilder:(BuildContext context, Animation<double> animation,
+                                      Animation<double> secondaryAnimation, Widget child){
+                                    return ScaleTransition(
+                                      scale: animation,
+                                      child: child,
+                                    );
+                                  },
 
-                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                                return UserQuotesRead(docid: snapshot.data!.docs[index]);
-                                }
+                                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                    return UserQuotesRead(docid: snapshot.data!.docs[index]);
+                                  }
                               )
-                            ),
+                              ),
                           child: Column(
                             children: [
                               Card(
@@ -151,7 +136,7 @@ class _UserQuotesListState extends State<UserQuotesList> {
                                         );
                                       },
                                       icon: const Icon(
-                                        Icons.edit_note_rounded,
+                                        Icons.favorite,
                                         size: 25,
                                         color: Color(0xFFFCDAB7),
                                       ),
@@ -173,14 +158,5 @@ class _UserQuotesListState extends State<UserQuotesList> {
     );
   }
 
-  MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
-    final getColor = (Set<MaterialState> states) {
-      if (states.contains(MaterialState.pressed)) {
-        return colorPressed;
-      } else {
-        return color;
-      }
-    };
-    return MaterialStateProperty.resolveWith(getColor);
-  }
+
 }
