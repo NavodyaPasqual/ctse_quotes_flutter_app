@@ -28,7 +28,9 @@ class _AdminQuotesListState extends State<AdminQuotesList> {
         ),
       ),
       appBar: AppBar(
-        title: const Text("Admin Quotes"),
+          title: const Text('Admin Quotes',
+              style:
+              TextStyle(fontSize: 18.0, color: Color(0xFFFCDAB7))),backgroundColor: const  Color(0xFF133B5C)
       ),
       body: StreamBuilder(
         stream: usersStream,
@@ -66,30 +68,31 @@ class _AdminQuotesListState extends State<AdminQuotesList> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                             side: const BorderSide(
-                              color: Colors.black,
+                              color: Color(0xFF133B5C),
                             ),
                           ),
                           title: Text(
                             snapshot.data!.docChanges[index].doc['author'],
                             style: const TextStyle(
-                              fontSize: 21,
+                              fontSize: 21,color: Color(0xFF133B5C),fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Text(
                             snapshot.data!.docChanges[index].doc['quote'],
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 20,color: Color(0xFF133B5C),fontStyle: FontStyle.italic,
                             ),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
-                            vertical: 12,
+                            vertical: 13,
                             horizontal: 16,
                           ),
                           trailing: MaterialButton(
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(builder: (_) => AdminQuotesEdit(docid: snapshot.data!.docs[index])));
                             },
-                            child: const Text('edit'),
+                            child: const Text('edit',style:
+                            TextStyle(fontSize: 17 ,fontWeight: FontWeight.bold, color: Color(0xFF133B5C))),
                           ),
                         ),
                       ),
