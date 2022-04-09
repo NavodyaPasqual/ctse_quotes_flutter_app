@@ -14,7 +14,7 @@ class ViewQuotes extends StatefulWidget {
 
 class _ViewQuotesState extends State<ViewQuotes> {
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('userQuotes').snapshots();
+      .collection('adminQuotes').snapshots();
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -38,14 +38,14 @@ class _ViewQuotesState extends State<ViewQuotes> {
       appBar: AppBar(
         title: const Text("Quotes"),
         titleTextStyle: const TextStyle(
-          color: Color(0xFFFCDAB7),
+          color: Color(0xFF5F97C4),
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
         backgroundColor: const Color(0xFF000000),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFFCDAB7)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF5F97C4)),
           onPressed: () =>
               Navigator.of(context).pop(),
         ),
@@ -97,7 +97,7 @@ class _ViewQuotesState extends State<ViewQuotes> {
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     gradient: LinearGradient(
-                                      colors: [Color(0xFFFCDAB7), Color(0xFF313130)],
+                                      colors: [Color(0xFF82BDEE), Color(0xFF383882)],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                     ),

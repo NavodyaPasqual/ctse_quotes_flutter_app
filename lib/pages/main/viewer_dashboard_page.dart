@@ -3,6 +3,7 @@ import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_list_page.d
 import 'package:flutter/material.dart';
 import 'package:ctse_quotes_flutter_app/pages/sidebarlib/NavBar.dart';
 import 'package:ctse_quotes_flutter_app/pages/viewer/view_quote.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ViewerDashboardPage extends StatefulWidget {
   const ViewerDashboardPage({Key? key}) : super(key: key);
@@ -16,9 +17,17 @@ class _ViewerDashboardPageState extends State<ViewerDashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF133B5C),
-        drawer: NavBar(),
+        drawer: const NavBar(),
         appBar: AppBar(
-          title: Text('Home'),
+          title: Text('WELCOME TO MOTIVATION',
+              style:  GoogleFonts.dosis(
+                color: const Color(0xFFFCDAB7),
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+          ),
+          iconTheme: const IconThemeData(color: Color(0xFFFCDAB7)),
+          backgroundColor: const  Color(0xFF133B5C),
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
@@ -76,7 +85,7 @@ class _ViewerDashboardPageState extends State<ViewerDashboardPage> {
                               )),
                           SizedBox(height: 20.0),
                           Center(
-                            child: Text('Motivational Quotes',
+                            child: Text('Motivation Quotes',
                                 style:
                                 TextStyle(fontSize: 18.0, color: Color(0xFF133B5C))),
                           )
