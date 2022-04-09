@@ -28,7 +28,6 @@ class _ViewQuotesState extends State<ViewQuotes> {
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('userQuotes').snapshots();
 
-  final TextEditingController _textEditingController = TextEditingController();
   final _random = Random();
   showCustomToast(value) {
   Widget toast = Container(

@@ -17,7 +17,6 @@ class _UserQuotesListState extends State<UserQuotesList> {
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('userQuotes').snapshots();
 
-  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

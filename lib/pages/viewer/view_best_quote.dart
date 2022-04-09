@@ -1,0 +1,228 @@
+import 'dart:math' as math;
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+
+class ViewBestQuotes extends StatefulWidget {
+  const ViewBestQuotes({Key? key}) : super(key: key);
+
+  @override
+  _ViewQuotesState createState() => _ViewQuotesState();
+}
+
+class _ViewQuotesState extends State<ViewBestQuotes> {
+  late FToast fToast;
+
+  @override
+  void initState(){
+    fToast = FToast();
+    fToast.init(context);
+    super.initState();
+  }
+  final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
+      .collection('userQuotes').snapshots();
+
+  final _random = Random();
+  showCustomToast(value) {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      margin: const EdgeInsets.only(bottom: 250.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: Colors.black87,
+
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.check,
+              color: Colors.white),
+          const SizedBox(
+            width: 12.0,
+          ),
+          Text(value,
+            style: const TextStyle(fontSize: 20.0,color: Colors.white),
+          ),
+
+        ],
+      ),
+    );
+
+    fToast.showToast(
+      child: toast,
+      toastDuration: const Duration(seconds: 3),
+    );
+  }
+  Future<void> _copyToClipboard(data) async {
+    await Clipboard.setData(ClipboardData(text: data));
+    var a = "copied...";
+    showCustomToast(a);
+  }
+
+  Future<void> share(data) async {
+    await Share.share(
+      data,
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery
+                .of(context)
+                .size
+                .width,
+            maxHeight: MediaQuery
+                .of(context)
+                .size
+                .height),
+        context: context);
+    return Scaffold(
+
+      backgroundColor: const Color(0xFFede8e8),
+
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Happy"),
+        titleTextStyle: const TextStyle(
+          color: Color(0xFF000000),
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        backgroundColor: const Color(0xFFFFFFFF),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF000000)),
+          onPressed: () =>
+              Navigator.of(context).pop(),
+        ),
+      ),
+      body: StreamBuilder(
+        stream: usersStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text("Something is wrong");
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(6),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  //shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (_, index) {
+                    return Container(
+                      margin: const EdgeInsets.only(left: 2.0,top: 3.0,right: 2.0,bottom: 2.0),
+                      child: Column(
+                        children: [
+                          Card(
+                            child: Container(
+                              color: Colors.primaries[_random.nextInt(Colors.primaries.length)]
+                              [_random.nextInt(9) * 100],
+                              padding: const EdgeInsets.only(top: 25.0,bottom: 0.0),
+                              child: ListTile(
+                                title: Text(
+                                  snapshot.data!.docChanges[index].doc['quote'],
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.ubuntu(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                subtitle : Container(
+                                  margin: const EdgeInsets.only(top: 25.0,bottom: 2.0),
+                                  padding: const EdgeInsets.only(top: 1.0,bottom: 10.0),
+                                  color: const Color(0x40000000),
+                                  child:Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                            },
+                                            icon: const Icon(
+                                              Icons.favorite_border,
+                                              size: 25,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
+                                          ),
+                                          const Text('Unfav',
+                                              style:
+                                              TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              _copyToClipboard(snapshot.data!.docChanges[index].doc['quote']);
+                                            },
+                                            icon: const Icon(
+                                              Icons.my_library_add_outlined,
+                                              size: 25,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
+                                          ),
+                                          const Text('Copy',
+                                              style:
+                                              TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              share(snapshot.data!.docChanges[index].doc['quote']);
+                                            },
+                                            icon: const Icon(
+                                              Icons.share_outlined,
+                                              size: 25,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
+                                          ),
+                                          const Text('Share',
+                                              style:
+                                              TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                              ),
+
+                            ),
+
+                          ),
+
+                        ],
+                      ),
+
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+
+}
