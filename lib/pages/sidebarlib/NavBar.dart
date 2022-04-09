@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_list_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:ctse_quotes_flutter_app/pages/viewer/fav.dart';
+
 
 import '../../models/main/user_model.dart';
 
@@ -31,7 +34,11 @@ class _NavBarState extends State<NavBar> {
       });
     });
   }
-
+  Future<void> share(data) async {
+    await Share.share(
+      data[0]+" "+data[1],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -55,12 +62,14 @@ class _NavBarState extends State<NavBar> {
           ListTile(
           leading: const Icon(Icons.favorite),
             title: const Text('Favorites'),
-            onTap: () => print('Fav'),
+            onTap: () => {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const FavList())),
+            },
           ),
           ListTile(
             leading: const Icon(Icons.share),
             title: const Text('Share'),
-            onTap: () => print('share'),
+            onTap: () => share([userModel.uid, userModel.email]),
           ),
           ListTile(
             leading: const Icon(Icons.my_library_add),
@@ -70,11 +79,6 @@ class _NavBarState extends State<NavBar> {
             },
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => print('Set'),
-          ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),

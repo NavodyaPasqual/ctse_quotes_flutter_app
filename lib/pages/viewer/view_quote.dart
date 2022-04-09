@@ -1,9 +1,13 @@
+import 'dart:math' as math;
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_edit_page.dart';
-import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ViewQuotes extends StatefulWidget {
   const ViewQuotes({Key? key}) : super(key: key);
@@ -13,11 +17,60 @@ class ViewQuotes extends StatefulWidget {
 }
 
 class _ViewQuotesState extends State<ViewQuotes> {
+  late FToast fToast;
+
+  @override
+  void initState(){
+    fToast = FToast();
+    fToast.init(context);
+    super.initState();
+  }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('adminQuotes').snapshots();
+      .collection('userQuotes').snapshots();
 
   final TextEditingController _textEditingController = TextEditingController();
+  final _random = Random();
+  showCustomToast(value) {
+  Widget toast = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+    margin: const EdgeInsets.only(bottom: 250.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(5.0),
+      color: Colors.black87,
 
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.check,
+        color: Colors.white),
+        const SizedBox(
+          width: 12.0,
+        ),
+        Text(value,
+          style: const TextStyle(fontSize: 20.0,color: Colors.white),
+        ),
+
+      ],
+    ),
+  );
+
+  fToast.showToast(
+    child: toast,
+    toastDuration: const Duration(seconds: 3),
+  );
+  }
+  Future<void> _copyToClipboard(data) async {
+    await Clipboard.setData(ClipboardData(text: data));
+    var a = "copied...";
+    showCustomToast(a);
+  }
+
+  Future<void> share(data) async {
+    await Share.share(
+      data,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -33,19 +86,20 @@ class _ViewQuotesState extends State<ViewQuotes> {
         context: context);
     return Scaffold(
 
-      backgroundColor: const Color(0xFF000000),
+      backgroundColor: const Color(0xFFede8e8),
 
       appBar: AppBar(
-        title: const Text("Quotes"),
+        centerTitle: true,
+        title: const Text("Angry"),
         titleTextStyle: const TextStyle(
-          color: Color(0xFF5F97C4),
+          color: Color(0xFF000000),
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
-        backgroundColor: const Color(0xFF000000),
+        backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF5F97C4)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF000000)),
           onPressed: () =>
               Navigator.of(context).pop(),
         ),
@@ -71,82 +125,95 @@ class _ViewQuotesState extends State<ViewQuotes> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (_, index) {
                     return Container(
-                        margin: const EdgeInsets.only(left: 4.0,top: 6.0,right: 4.0,bottom: 6.0),
-                        child: GestureDetector(
-                          onTap: () =>
-                              Navigator.push(context,PageRouteBuilder(
-                                  transitionDuration:const Duration(milliseconds: 600),
-                                  reverseTransitionDuration: const Duration(milliseconds: 420),
-                                  transitionsBuilder:(BuildContext context, Animation<double> animation,
-                                      Animation<double> secondaryAnimation, Widget child){
-                                    return ScaleTransition(
-                                      scale: animation,
-                                      child: child,
-                                    );
-                                  },
-
-                                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                                    return UserQuotesRead(docid: snapshot.data!.docs[index]);
-                                  }
-                              )
-                              ),
-                          child: Column(
+                        margin: const EdgeInsets.only(left: 2.0,top: 3.0,right: 2.0,bottom: 2.0),
+                      child: Column(
                             children: [
                               Card(
-                                color: Colors.black,
                                 child: Container(
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [Color(0xFF82BDEE), Color(0xFF383882)],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.horizontal(
-                                        right: Radius.circular(20),
-                                        left: Radius.circular(20)),
-                                  ),
+                                    color: Colors.primaries[_random.nextInt(Colors.primaries.length)]
+                                    [_random.nextInt(9) * 100],
+                                  padding: const EdgeInsets.only(top: 25.0,bottom: 0.0),
                                   child: ListTile(
                                     title: Text(
                                       snapshot.data!.docChanges[index].doc['quote'],
-                                      style: GoogleFonts.josefinSans(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.italic,
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.normal,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                                        fontSize: 25,
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      snapshot.data!.docChanges[index].doc['author'],
-                                      style: GoogleFonts.dosis(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.italic,
+                                    subtitle : Container(
+                                      margin: const EdgeInsets.only(top: 25.0,bottom: 2.0),
+                                      padding: const EdgeInsets.only(top: 1.0,bottom: 10.0),
+                                      color: const Color(0x40000000),
+                                      child:Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Column(
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.favorite_border,
+                                                    size: 25,
+                                                    color: Color(0xFFFFFFFF),
+                                                  ),
+                                                ),
+                                                const Text('fav',
+                                                    style:
+                                                    TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                              ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  _copyToClipboard(snapshot.data!.docChanges[index].doc['quote']);
+                                                  },
+                                                icon: const Icon(
+                                                  Icons.my_library_add_outlined,
+                                                  size: 25,
+                                                  color: Color(0xFFFFFFFF),
+                                                ),
+                                              ),
+                                              const Text('Copy',
+                                                  style:
+                                                  TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  share(snapshot.data!.docChanges[index].doc['quote']);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.share_outlined,
+                                                  size: 25,
+                                                  color: Color(0xFFFFFFFF),
+                                                ),
+                                              ),
+                                              const Text('Share',
+                                                  style:
+                                                  TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 22.0, right: 0.0,top: 12.0, bottom: 12.0
-                                    ),
-                                    trailing: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(
-                                            builder: (_) =>
-                                                UserQuotesEdit(docid: snapshot.data!
-                                                    .docs[index]
-                                                )
-                                        )
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.favorite,
-                                        size: 25,
-                                        color: Color(0xFFFCDAB7),
                                       ),
+
                                     ),
+
                                   ),
+
                                 ),
-                              ),
+
                             ],
                           ),
-                        )
+
                     );
                   },
                 ),
