@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -154,6 +153,7 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
                                         children: [
                                           IconButton(
                                             onPressed: () {
+
                                             },
                                             icon: const Icon(
                                               Icons.favorite_border,

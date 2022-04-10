@@ -153,12 +153,23 @@ class _FavList extends State<FavList> {
                                               snapshot.data!.docs[index].reference.update({
                                                 'fav': false
                                               });
+
+                                              if(snapshot.data!.docChanges[index].doc['count'] > 0) {
+                                                snapshot.data!.docs[index]
+                                                    .reference.update({
+                                                  'count': snapshot.data!
+                                                      .docChanges[index]
+                                                      .doc['count'] - 1,
+                                                });
+                                              }
+                                              var a = "Removed From Fav";
+                                              showCustomToast(a);
                                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const FavList()));
                                             },
                                             icon: const Icon(
-                                              Icons.favorite_border,
+                                              Icons.favorite,
                                               size: 25,
-                                              color: Color(0xFFFFFFFF),
+                                              color: Colors.red,
                                             ),
                                           ),
                                           const Text('fav',

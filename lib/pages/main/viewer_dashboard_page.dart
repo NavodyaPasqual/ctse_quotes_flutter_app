@@ -3,6 +3,7 @@ import 'package:ctse_quotes_flutter_app/pages/sidebarlib/NavBar.dart';
 import 'package:ctse_quotes_flutter_app/pages/viewer/view_quote.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ctse_quotes_flutter_app/pages/viewer/view_best_quote.dart';
+import 'package:ctse_quotes_flutter_app/pages/viewer/search.dart';
 
 
 class ViewerDashboardPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _ViewerDashboardPageState extends State<ViewerDashboardPage> {
           iconTheme: const IconThemeData(color: Colors.black),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));},
               icon: customIcon,
             )
           ],

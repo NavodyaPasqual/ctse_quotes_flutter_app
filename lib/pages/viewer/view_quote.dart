@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,6 +53,7 @@ class _ViewQuotesState extends State<ViewQuotes> {
     ),
   );
 
+
   fToast.showToast(
     child: toast,
     toastDuration: const Duration(seconds: 3),
@@ -70,6 +70,9 @@ class _ViewQuotesState extends State<ViewQuotes> {
       data,
     );
   }
+  late bool isFavourite = true;
+
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -154,22 +157,40 @@ class _ViewQuotesState extends State<ViewQuotes> {
                                               children: [
                                                 IconButton(
                                                   onPressed: () {
+
                                                     if(snapshot.data!.docChanges[index].doc['fav'] == true){
                                                       snapshot.data!.docs[index].reference.update({
-                                                        'fav': false
+                                                        'fav': false,
                                                       });
+                                                      if(snapshot.data!.docChanges[index].doc['count'] > 0){
+                                                        snapshot.data!.docs[index].reference.update({
+                                                          'count': snapshot.data!.docChanges[index].doc['count'] - 1,
+                                                        });
+                                                      }
+                                                      var a = "Removed From Fav";
+                                                      setState(() {
+                                                        isFavourite = true;
+                                                      });
+                                                      showCustomToast(a);
                                                     }
                                                     else if(snapshot.data!.docChanges[index].doc['fav'] == false){
                                                       snapshot.data!.docs[index].reference.update({
-                                                        'fav': true
+                                                        'fav': true,
+                                                        'count': snapshot.data!.docChanges[index].doc['count'] + 1,
                                                       });
+                                                      var a = "Added To Fav";
+                                                      setState(() {
+                                                        isFavourite = false;
+                                                      });
+                                                      showCustomToast(a);
                                                     }
                                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ViewQuotes()));
-                                                  },
-                                                  icon: const Icon(
+
+                                                    },
+                                                  icon: Icon(
                                                     Icons.favorite_border,
                                                     size: 25,
-                                                    color: Color(0xFFFFFFFF),
+                                                    color: isFavourite ? Colors.white : Colors.red,
                                                   ),
                                                 ),
                                                 const Text('fav',
