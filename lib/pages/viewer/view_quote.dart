@@ -27,7 +27,9 @@ class _ViewQuotesState extends State<ViewQuotes> {
     super.initState();
   }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('adminQuotes').snapshots();
+      .collection('adminQuotes')
+      .orderBy('count', descending: true)
+      .snapshots();
 
   final _random = Random();
   showCustomToast(value) {
