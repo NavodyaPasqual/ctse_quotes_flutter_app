@@ -1,6 +1,4 @@
-import 'dart:math' as math;
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,9 +24,8 @@ class _FavList extends State<FavList> {
     super.initState();
   }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('fav').snapshots();
+      .collection('userQuotes').where('fav',isEqualTo: true).snapshots();
 
-  final TextEditingController _textEditingController = TextEditingController();
   final _random = Random();
   showCustomToast(value) {
     Widget toast = Container(
@@ -85,12 +82,10 @@ class _FavList extends State<FavList> {
                 .height),
         context: context);
     return Scaffold(
-
       backgroundColor: const Color(0xFFede8e8),
-
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Angry"),
+        title: const Text("Favorite"),
         titleTextStyle: const TextStyle(
           color: Color(0xFF000000),
           fontWeight: FontWeight.bold,
@@ -155,6 +150,10 @@ class _FavList extends State<FavList> {
                                         children: [
                                           IconButton(
                                             onPressed: () {
+                                              snapshot.data!.docs[index].reference.update({
+                                                'fav': false
+                                              });
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const FavList()));
                                             },
                                             icon: const Icon(
                                               Icons.favorite_border,
@@ -206,11 +205,8 @@ class _FavList extends State<FavList> {
                                 ),
 
                               ),
-
                             ),
-
                           ),
-
                         ],
                       ),
 
