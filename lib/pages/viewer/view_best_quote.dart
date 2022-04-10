@@ -27,7 +27,9 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
     super.initState();
   }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('adminQuotes').snapshots();
+      .collection('adminQuotes')
+      .orderBy('count', descending: true)
+      .snapshots();
 
   final _random = Random();
   showCustomToast(value) {
@@ -71,6 +73,9 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
       data,
     );
   }
+
+  late bool isFavourite = true;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -172,15 +177,42 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
                                         children: [
                                           IconButton(
                                             onPressed: () {
+                                              if(snapshot.data!.docChanges[index].doc['fav'] == true){
+                                                snapshot.data!.docs[index].reference.update({
+                                                  'fav': false,
+                                                });
+                                                if(snapshot.data!.docChanges[index].doc['count'] > 0){
+                                                  snapshot.data!.docs[index].reference.update({
+                                                    'count': snapshot.data!.docChanges[index].doc['count'] - 1,
+                                                  });
+                                                }
+                                                var a = "Removed From Fav";
+                                                setState(() {
+                                                  isFavourite = true;
+                                                });
+                                                showCustomToast(a);
+                                              }
+                                              else if(snapshot.data!.docChanges[index].doc['fav'] == false){
+                                                snapshot.data!.docs[index].reference.update({
+                                                  'fav': true,
+                                                  'count': snapshot.data!.docChanges[index].doc['count'] + 1,
+                                                });
+                                                var a = "Added To Fav";
+                                                setState(() {
+                                                  isFavourite = false;
+                                                });
+                                                showCustomToast(a);
+                                              }
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ViewBestQuotes()));
 
                                             },
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.favorite_border,
                                               size: 25,
-                                              color: Color(0xFFFFFFFF),
+                                              color: isFavourite ? Colors.white : Colors.red,
                                             ),
                                           ),
-                                          const Text('Unfav',
+                                          Text((snapshot.data!.docChanges[index].doc['count']).toString(),
                                               style:
                                               TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
                                         ],

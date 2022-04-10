@@ -211,7 +211,7 @@ class _ViewQuotesState extends State<ViewQuotes> {
                                                     color: isFavourite ? Colors.white : Colors.red,
                                                   ),
                                                 ),
-                                                const Text('fav',
+                                                Text((snapshot.data!.docChanges[index].doc['count']).toString(),
                                                     style:
                                                     TextStyle(fontSize: 18.0, color: Color(0xFFffffff))),
                                               ],
