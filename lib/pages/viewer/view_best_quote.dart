@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../admin/admin_quotes_read_page.dart';
+
 class ViewBestQuotes extends StatefulWidget {
   const ViewBestQuotes({Key? key}) : super(key: key);
 
@@ -124,6 +126,23 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
                   itemBuilder: (_, index) {
                     return Container(
                       margin: const EdgeInsets.only(left: 2.0,top: 3.0,right: 2.0,bottom: 2.0),
+                      child: GestureDetector(
+                      onTap: () =>
+                        Navigator.push(context,PageRouteBuilder(
+                        transitionDuration:const Duration(milliseconds: 600),
+                        reverseTransitionDuration: const Duration(milliseconds: 420),
+                        transitionsBuilder:(BuildContext context, Animation<double> animation,
+                        Animation<double> secondaryAnimation, Widget child){
+                        return ScaleTransition(
+                          scale: animation,
+                          child: child,
+                          );
+                        },
+                        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                          return AdminQuotesRead(docid: snapshot.data!.docs[index]);
+                          }
+                          )
+                        ),
                       child: Column(
                         children: [
                           Card(
@@ -212,7 +231,7 @@ class _ViewQuotesState extends State<ViewBestQuotes> {
 
                         ],
                       ),
-
+                    ),
                     );
                   },
                 ),

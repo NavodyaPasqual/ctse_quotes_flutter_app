@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-
-
 class AdminQuotesRead extends StatefulWidget {
   DocumentSnapshot docid;
   AdminQuotesRead({required this.docid});
