@@ -26,7 +26,7 @@ class _ViewQuotesState extends State<ViewQuotes> {
     super.initState();
   }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('userQuotes').snapshots();
+      .collection('adminQuotes').snapshots();
 
   final _random = Random();
   showCustomToast(value) {
@@ -154,6 +154,17 @@ class _ViewQuotesState extends State<ViewQuotes> {
                                               children: [
                                                 IconButton(
                                                   onPressed: () {
+                                                    if(snapshot.data!.docChanges[index].doc['fav'] == true){
+                                                      snapshot.data!.docs[index].reference.update({
+                                                        'fav': false
+                                                      });
+                                                    }
+                                                    else if(snapshot.data!.docChanges[index].doc['fav'] == false){
+                                                      snapshot.data!.docs[index].reference.update({
+                                                        'fav': true
+                                                      });
+                                                    }
+                                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ViewQuotes()));
                                                   },
                                                   icon: const Icon(
                                                     Icons.favorite_border,
@@ -203,16 +214,11 @@ class _ViewQuotesState extends State<ViewQuotes> {
                                         ],
                                       ),
                                       ),
-
                                     ),
-
                                   ),
-
                                 ),
-
                             ],
                           ),
-
                     );
                   },
                 ),
@@ -223,6 +229,4 @@ class _ViewQuotesState extends State<ViewQuotes> {
       ),
     );
   }
-
-
 }

@@ -24,7 +24,7 @@ class _FavList extends State<FavList> {
     super.initState();
   }
   final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
-      .collection('userQuotes').where('fav',isEqualTo: true).snapshots();
+      .collection('adminQuotes').where('fav',isEqualTo: true).snapshots();
 
   final _random = Random();
   showCustomToast(value) {
