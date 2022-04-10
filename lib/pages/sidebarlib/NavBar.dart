@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ctse_quotes_flutter_app/pages/userQuotes/user_quotes_list_page.dart';
 import 'package:ctse_quotes_flutter_app/pages/main/login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share_plus/share_plus.dart';
@@ -69,6 +70,13 @@ class _NavBarState extends State<NavBar> {
             leading: const Icon(Icons.share),
             title: const Text('Share'),
             onTap: () => share([userModel.uid, userModel.email]),
+          ),
+          ListTile(
+            leading: const Icon(Icons.my_library_add),
+            title: const Text('My Quotes'),
+            onTap: () => {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const UserQuotesList())),
+            },
           ),
           const Divider(),
           ListTile(
